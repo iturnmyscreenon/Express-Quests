@@ -31,6 +31,32 @@ const getUserById = (req, res) => {
 
 }
 
+const getUser = (req, res) => {
+  let sql = "select * from users";
+  const sqlValues = [];
+
+  if (req.query.city != null) {
+    sql += " where city = ?";
+    sqlValues.push(req.query.city);
+  }
+  if (req.query.language != null) {
+
+    sql += " where language = ?";
+    sqlValues.push(req.query.language);
+  }
+
+  database
+    .query(sql, sqlValues)
+    .then(([users]) => {
+      res.json(users);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(200).send("Error retrieving data from database");
+    });
+}
+
+
 const postUsers = (req, res) => {
   const { firstname, lastname, email, city, language } = req.body;
 
@@ -90,5 +116,6 @@ module.exports = {
   getUserById,
   postUsers,
   putUsers,
-  deleteUsers
+  deleteUsers,
+  getUser
 };
