@@ -58,14 +58,14 @@ const getUser = (req, res) => {
 
 
 const postUsers = (req, res) => {
-  const { firstname, lastname, email, city, language } = req.body;
+  const { firstname, lastname, email, city, language, password } = req.body;
 
   database
-    .query("insert into users (firstname, lastname, email, city, language) values (?, ?, ?, ?, ?)", [firstname, lastname, email, city, language])
+
+    .query("insert into users (firstname, lastname, email, city, language, password) values (?, ?, ?, ?, ?, ?)", [firstname, lastname, email, city, language, password])
     .then(([result]) => {
-      res.location(`/api/users/${result.insertId}`).sendStatus(201);
-    }
-    )
+      res.status(201).json({ id: result.insertId });
+    })
     .catch((err) => {
       console.error(err);
       res.status(500).send("Error retrieving data from database");
