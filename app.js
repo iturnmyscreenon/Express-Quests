@@ -23,6 +23,14 @@ const { hashPassword, verifyPassword, verifyToken } = require("./auth.js");
 // public route 
 
 app.get("/", welcome);
+app.get("/api/movies", movieHandlers.getMovies);
+app.get("/api/movies/:id", movieHandlers.getMovieById);
+app.get("/api/movies/:id/color", movieHandlers.getMovie);
+app.get("/api/movies/:id/max_duration", movieHandlers.getMovie);
+app.get("/api/users", userHandlers.getUsers);
+app.get("/api/users/:id", userHandlers.getUserById);
+app.get("/api/users/:id/language", userHandlers.getUser);
+app.get("/api/users/:id/city", userHandlers.getUser);
 app.post ("/api/users", hashPassword, userHandlers.postUsers);
 app.post("/api/users/login", verifyPassword);
 
@@ -30,19 +38,12 @@ app.post("/api/users/login", verifyPassword);
 
 app.use(verifyToken);
 
-app.get("/api/movies", movieHandlers.getMovies);
-app.get("/api/movies/:id", movieHandlers.getMovieById);
-app.get("/api/movies/:id/color", movieHandlers.getMovie);
-app.get("/api/movies/:id/max_duration", movieHandlers.getMovie);
+
 app.post("/api/movies", movieHandlers.postMovie);
 app.put("/api/movies/:id", movieHandlers.putMovie);
 app.delete("/api/movies/:id", movieHandlers.deleteMovie);
 
 
-app.get("/api/users", userHandlers.getUsers);
-app.get("/api/users/:id", userHandlers.getUserById);
-app.get("/api/users/:id/language", userHandlers.getUser);
-app.get("/api/users/:id/city", userHandlers.getUser);
 app.post("/api/users", userHandlers.postUsers);
 app.put("/api/users/:id", userHandlers.putUsers);
 app.delete("/api/users/:id", userHandlers.deleteUsers);
