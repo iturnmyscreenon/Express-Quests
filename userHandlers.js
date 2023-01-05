@@ -110,6 +110,25 @@ const deleteUsers = (req, res) => {
     });
 }
 
+const getUserByEmailAndPassword = (req, res , next) => {  
+  const {email} = req.body;
+
+    database.query("select * from users where email = ?" , [email])
+    .then(([user]) => {
+      if(user[0] != null){
+        req.user = user[0]
+        next()
+      }else{
+        res.sendStatus(401)
+      }
+    }).catch((err) => {
+      console.error(err)
+      res.status(500).send("Error retrieving data from databases")
+    })
+}
+
+
+
 
 module.exports = {
   getUsers,
@@ -117,5 +136,6 @@ module.exports = {
   postUsers,
   putUsers,
   deleteUsers,
-  getUser
+  getUser,
+  getUserByEmailAndPassword,
 };
