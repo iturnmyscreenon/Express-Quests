@@ -1,4 +1,5 @@
-const database = require("./database");
+const {database} = require("./database");
+
 
 const getUserById = (req, res) => {
   const id = parseInt(req.params.id);
@@ -101,26 +102,23 @@ const deleteUsers = (req, res) => {
       res.status(500).send("Error retrieving data from database");
     });
 }
+const getUserByEmailAndPassword = (req, res) => {
+  const { email } = req.body;
 
-const getUserByEmailAndPassword = (req, res , next) => {  
-  const {email} = req.body;
-
-    database.query("select * from users where email = ?" , [email])
-    .then(([user]) => {
-      if(user[0] != null){
-        req.user = user[0]
-        next()
-      }else{
-        res.sendStatus(401)
+  database
+    .query("select * from users where email = ?", [email])  
+    .then(([users]) => {
+      if (users[0] != null) {
+        res.json(users[0]);
+      } else {
+        res.status(404).send("Not Found");
       }
-    }).catch((err) => {
-      console.error(err)
-      res.status(500).send("Error retrieving data from databases")
     })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("Error retrieving data from database");
+    });
 }
-
-
-
 
 module.exports = {
   getUsers,

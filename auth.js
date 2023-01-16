@@ -1,5 +1,6 @@
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
+const { getUserByEmailAndPassword } = require('./userHandlers');
 require ('dotenv').config();
 
 const hashingOptions  = {
@@ -15,7 +16,7 @@ const hashPassword = (req, res, next) => {
   .then((hashedPassword) => {
     console.log(hashedPassword);
     req.body.password = hashedPassword;
-    delete req.body.password;
+    req.body.hashedPassword = hashedPassword;
     next();
   })
   .catch((err) => {
@@ -26,7 +27,7 @@ const hashPassword = (req, res, next) => {
 }
 
 const verifyPassword = async (req , res) => {
-  const user = req.user;
+  const user = await getUserByEmailAndPassword(req.body.password)
 
 try {
   

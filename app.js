@@ -32,7 +32,7 @@ app.get("/api/users/:id", userHandlers.getUserById);
 app.get("/api/users/:id/language", userHandlers.getUsers);
 app.get("/api/users/:id/city", userHandlers.getUsers);
 app.post ("/api/users", hashPassword, userHandlers.postUsers);
-app.post("/api/users/login", verifyPassword);
+app.post("/api/users/login", userHandlers.getUserByEmailAndPassword, verifyPassword);
 
 //protected route
 
