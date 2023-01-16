@@ -43,8 +43,6 @@ app.post("/api/movies", movieHandlers.postMovie);
 app.put("/api/movies/:id", movieHandlers.putMovie);
 app.delete("/api/movies/:id", movieHandlers.deleteMovie);
 
-
-app.post("/api/users", userHandlers.postUsers);
 app.put("/api/users/:id", userHandlers.putUsers);
 app.delete("/api/users/:id", userHandlers.deleteUsers);
 
