@@ -68,7 +68,7 @@ CREATE TABLE users (
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 INSERT INTO
-  users (firstname, lastname, email, city, language)
+  users (firstname, lastname, email, city, language, hashedPassword)
 VALUES
 (
     'John',

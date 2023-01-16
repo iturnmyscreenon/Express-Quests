@@ -1,17 +1,5 @@
 const database = require("./database");
 
-const getUsers = (req, res) => {
-  database
-    .query("select * from users")
-    .then(([users]) => {
-      res.json(users);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send("Error retrieving data from database");
-    });
-}
-
 const getUserById = (req, res) => {
   const id = parseInt(req.params.id);
 
@@ -31,18 +19,22 @@ const getUserById = (req, res) => {
 
 }
 
-const getUser = (req, res) => {
+const getUsers = (req, res) => {
   let sql = "select * from users";
   const sqlValues = [];
 
-  if (req.query.city != null) {
-    sql += " where city = ?";
-    sqlValues.push(req.query.city);
-  }
   if (req.query.language != null) {
-
     sql += " where language = ?";
     sqlValues.push(req.query.language);
+  }
+
+  if (req.query.city != null) {
+    if (sqlValues.length === 0) {
+      sql += " where city = ?";
+    } else {
+      sql += " and city = ?";
+    }
+    sqlValues.push(req.query.city);
   }
 
   database
@@ -52,9 +44,9 @@ const getUser = (req, res) => {
     })
     .catch((err) => {
       console.error(err);
-      res.status(200).send("Error retrieving data from database");
+      res.status(500).send("Error retrieving data from database");
     });
-}
+};
 
 
 const postUsers = (req, res) => {
@@ -136,6 +128,5 @@ module.exports = {
   postUsers,
   putUsers,
   deleteUsers,
-  getUser,
   getUserByEmailAndPassword,
 };

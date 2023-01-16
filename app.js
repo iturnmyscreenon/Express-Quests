@@ -29,8 +29,8 @@ app.get("/api/movies/:id/color", movieHandlers.getMovie);
 app.get("/api/movies/:id/max_duration", movieHandlers.getMovie);
 app.get("/api/users", userHandlers.getUsers);
 app.get("/api/users/:id", userHandlers.getUserById);
-app.get("/api/users/:id/language", userHandlers.getUser);
-app.get("/api/users/:id/city", userHandlers.getUser);
+app.get("/api/users/:id/language", userHandlers.getUsers);
+app.get("/api/users/:id/city", userHandlers.getUsers);
 app.post ("/api/users", hashPassword, userHandlers.postUsers);
 app.post("/api/users/login", verifyPassword);
 
